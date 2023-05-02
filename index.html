@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las Nubes</title>
+    <link rel="stylesheet" href="bs/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/new_colors.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+    </style>
+</head>
+
+<body>
+
+    <div class="center bg-dark" data-bs-theme="dark">
+        <header>
+            <!-- Image and text -->
+            <nav class="container navbar navbar-dark bg-dark" data-bs-theme="dark">
+                <a class="navbar-brand" href="#">
+                    <img src="img/img/logo.png" alt="">
+                    <p style="text-align: center;">NIT: 104752235-3</p>
+                </a>
+                <div class="header-right bg-dark" data-bs-theme="dark">
+                    <div>Teléfono: 3245145515</div>
+                    <div>Dirección: Cra 29 N° 39-59</div>
+                    <div>Email: rrov@lasnubes.com</div>
+                </div>
+            </nav>
+            <section class="mid-white">
+                <div class="container header_abajo">
+                    <div class="row">
+                        <p class="col col-md-2">Factura No: <input type="number" class="form-control"
+                                id="generated_number" value="0" disabled style="float: right;"></p>
+                        <p class="col col-md-4">Fecha actual: <input type="text" class="form-control"
+                                id="requested_date" value="30/04/1998" disabled style="float: right;"></p>
+                        <div></div>
+                        <p class="col col-md-6">Nombre cliente: <input type="text" class="form-control"
+                                id="nombre_cliente" placeholder="Pepito Pérez"></p>
+                        <p class="col col-6">Dirección cliente: <input type="text" class="form-control"
+                                id="direccion_cliente" placeholder="En Mi Casa"></p>
+                        <div></div>
+                        <p class="col col-6">Teléfono cliente: <input type="number" class="form-control"
+                                id="telefono_cliente" placeholder="3101234567" min="1"></p>
+                        <p class="col col-6">Email cliente: <input type="email" class="form-control" id="email_cliente"
+                                placeholder="cliente@example.com"></p>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <main>
+            <div class="container main_up">
+                <div class="input-group input-group-sm mb-3 ">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">0</span>
+                    <input type="button" class="form-control col-1 mid-white" id="valor_actual" value="+">
+                </div>
+                <table class="table table-dark table-striped table-hover">
+                    <thead>
+                        <tr class="prueba">
+                            <th scope="col">Código</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Costo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table_body">
+                    </tbody>
+                </table>
+            </div>
+            <div class="main_down mid-white">
+                <div class="container">
+                    <div class="main_down_left col-7">
+                        <div class="facturar">
+                            <button type="button" class="btn btn-primary" id="facturar">Facturar</button>
+                        </div>
+                    </div>
+                    <div class="main_down_right col-5">
+                        <form>
+                            <div class="mb-3">
+                                <label for="input_subTotal" class="form-label">SubTotal: &nbsp; &nbsp; &nbsp; &nbsp;
+                                    &nbsp;</label>
+                                <input type="text" style="max-width: 40%; display:inline;" class="form-control"
+                                    id="input_subTotal" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input_Impuesto" class="form-label">Impuesto (%): &nbsp;</label>
+                                <input type="text" min="0" style="max-width: 40%; display:inline;" class="form-control"
+                                    id="input_Impuesto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input_Descuento" class="form-label" style="display:inline;">Descuento (%):
+                                </label>
+                                <input type="text" min="0" style="max-width: 40%; display:inline;" class="form-control"
+                                    id="input_Descuento">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input_Total" class="form-label" style="display:inline;">Total: &nbsp; &nbsp;
+                                    &nbsp; &nbsp;
+                                    &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                </label>
+                                <input type="text" min="0" style="max-width: 40%; display:inline;" class="form-control"
+                                    id="input_Total" disabled>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Enlace a jQuery -->
+    <script src="js/jquery-3.6.4.min.js"></script>
+
+    <!-- Enlace a Popper -->
+    <script src="js/popper.min.js"></script>
+
+    <!-- Enlace a Bootstrap JS -->
+    <script src="/bs/js/bootstrap.min.js"></script>
+
+    <script src="js/header.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script src="js/jspdf.debug.js"></script>
+
+    <script src="js/generarPDF.js"></script>
+
+</body>
+
+</html>
