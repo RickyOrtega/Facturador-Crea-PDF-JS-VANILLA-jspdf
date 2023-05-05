@@ -14,6 +14,7 @@ const input_Descuento = document.getElementById('input_Descuento');
 const input_Total = document.getElementById('input_Total');
 
 let numero_factura = 1;
+let numero_pagina = 1;
 
 boton_facturar.addEventListener('click', function () {
 
@@ -23,10 +24,36 @@ boton_facturar.addEventListener('click', function () {
 
 function guardarPDF() {
 
+    var doc = new jsPDF('p', 'pt', 'letter');
+    var margin = 10;
+    var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+
+    doc.html(document.body, {
+
+        x: margin,
+        y: margin,
+
+        html2canvas: {
+
+            scale: scale,
+
+        },
+        callback: function (doc) {
+
+            doc.output('dataurlnewwindow', { filename: 'Factura' + numero_factura + '.pdf' });
+
+        }
+
+    });
+
+}
+
+/*function guardarPDF() {
+
     let doc = new jsPDF('p', 'pt', 'letter');
 
     doc.setFontSize(22);
-    
+
     //Información de la empresa
     doc.text(20, 20, 'Las Nubes');
     doc.line(20, 25, 590, 25);
@@ -61,6 +88,12 @@ function guardarPDF() {
     doc.line(590, 145, 590, 600);
     doc.line(20, 600, 590, 600);
 
+    //Información de los totales
+    doc.text(400, 620, 'Subtotal: ' + subtotal.value);
+    doc.text(400, 640, 'Impuesto: ' + input_Impuesto.value);
+    doc.text(400, 660, 'Descuento: ' + input_Descuento.value);
+    doc.text(400, 680, 'Total: ' + input_Total.value);
+
     //Información de los productos
 
     let y = 170;
@@ -75,17 +108,18 @@ function guardarPDF() {
 
         y += 20;
 
-    }
+        if (y > 600) {
 
-    //Información de los totales
-    doc.text(400, 620, 'Subtotal: ' + subtotal.value);
-    doc.text(400, 640, 'Impuesto: ' + input_Impuesto.value);
-    doc.text(400, 660, 'Descuento: ' + input_Descuento.value);
-    doc.text(400, 680, 'Total: ' + input_Total.value);
+            doc.addPage();
+            y = 170;
+
+        }
+
+    }
 
     //doc.save('Factura' + numero_factura + '.pdf');
     doc.output('dataurlnewwindow', { filename: 'Factura' + numero_factura + '.pdf' });
 
 
     numero_factura++;
-}
+}*/

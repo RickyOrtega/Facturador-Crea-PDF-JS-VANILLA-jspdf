@@ -38,6 +38,7 @@ function incrementarNumero() {
 function crearRow() {
 
     let row = document.createElement('tr');
+    row.setAttribute('id', 'row_' + numeroActual.innerHTML);
 
     const th1 = document.createElement('th');
     th1.setAttribute('scope', 'row');
@@ -45,10 +46,13 @@ function crearRow() {
     const td3 = document.createElement('td');
     const td4 = document.createElement('td');
     const td5 = document.createElement('td');
+    const td6 = document.createElement('td');
+    const div = document.createElement('div');
 
     const input_codigo = crearInput('number', 'tb_principal_codigo form-control', 'codigo_' + numeroActual.innerHTML, true, -1);
     const input_nombre = crearInput('text', 'tb_principal_nombre form-control', 'nombre_' + numeroActual.innerHTML, false, -1);
     const input_cantidad = crearInput('number', 'tb_principal_cantidad form-control', 'cantidad_' + numeroActual.innerHTML, false, 1);
+    input_cantidad.setAttribute('max', 100);
     input_cantidad.addEventListener('change', function () {
 
         cantidadPrecio(input_cantidad);
@@ -64,21 +68,67 @@ function crearRow() {
     input_precio.addEventListener('keyup', function () {
         cantidadPrecio(input_precio);
     });
+    const input_descuento_producto = crearInput('text', 'tb_principal_descuento form-control', 'descuento_' + numeroActual.innerHTML, true, -1);
     const input_costo = crearInput('text', 'tb_principal_costo form-control', 'costo_' + numeroActual.innerHTML, true, -1);
 
     th1.appendChild(input_codigo);
     td2.appendChild(input_nombre);
     td3.appendChild(input_cantidad);
     td4.appendChild(input_precio);
+    td6.appendChild(input_descuento_producto);
     td5.appendChild(input_costo);
+
+    div.setAttribute('class', 'btn btn-danger');
+    div.setAttribute('id', 'btn_' + numeroActual.innerHTML);
+    div.innerHTML = 'Eliminar';
+    div.addEventListener('click', function () {
+        eliminarFila(div);
+    });
 
     row.appendChild(th1);
     row.appendChild(td2);
     row.appendChild(td3);
     row.appendChild(td4);
+    row.appendChild(td6);
     row.appendChild(td5);
+    row.appendChild(div);
 
     return row;
+}
+
+function eliminarFila(element) {
+
+    let numeroElemento = element.id.split('_')[1];
+
+    let row = document.getElementById('row_' + numeroElemento);
+
+    row.remove();
+
+    numeroActual.innerHTML = parseInt(numeroActual.innerHTML) - 1;
+
+    ajustarCodigos();
+}
+
+function ajustarCodigos(element) {
+
+    let codigos = document.getElementsByClassName('tb_principal_codigo');
+    let nombres = document.getElementsByClassName('tb_principal_nombre');
+    let cantidades = document.getElementsByClassName('tb_principal_cantidad');
+    let precios = document.getElementsByClassName('tb_principal_precio');
+    let descuentos = document.getElementsByClassName('tb_principal_descuento');
+    let costos = document.getElementsByClassName('tb_principal_costo');
+
+    for (let i = 0; i < codigos.length; i++) {
+
+        codigos[i].setAttribute('id', 'codigo_' + (1 + i));
+        codigos[i].setAttribute('value', (1 + i));
+        nombres[i].setAttribute('id', 'nombre_' + (1 + i));
+        cantidades[i].setAttribute('id', 'cantidad_' + (1 + i));
+        precios[i].setAttribute('id', 'precio_' + (1 + i));
+        descuentos[i].setAttribute('id', 'descuento_' + (1 + i));
+        costos[i].setAttribute('id', 'costo_' + (1 + i));
+
+    }
 }
 
 function crearInput(type, clase, id, disabled, min) {
@@ -141,7 +191,6 @@ function calcularSubTotal() {
 
     calcularTotal(total);
     calcularTotal(stotal);
-
 }
 
 iva.addEventListener('change', function () {
@@ -158,7 +207,7 @@ iva.addEventListener('keyup', function () {
 
 function calcularIva(element, sub_total) {
 
-    sub_total_IVA = element.value/100 * sub_total + sub_total;
+    sub_total_IVA = element.value / 100 * sub_total + sub_total;
 
     calcularDescuento(descuento, sub_total_IVA);
     calcularTotal(total);
@@ -178,7 +227,7 @@ descuento.addEventListener('keyup', function () {
 
 function calcularDescuento(element, sub_total_IVA) {
 
-    total = sub_total_IVA - element.value/100 * sub_total_IVA;
+    total = sub_total_IVA - element.value / 100 * sub_total_IVA;
 
     console.log("Subtotal + IVA - descuento: " + total);
 
